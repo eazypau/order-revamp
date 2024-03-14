@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.28.0",
     "firebase": "^10.8.1",
     "formik": "^2.4.5",
     "moment": "^2.30.1",
@@ -18,6 +19,7 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.27.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
