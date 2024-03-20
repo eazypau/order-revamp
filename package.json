@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.28.0",
+    "@tanstack/react-table": "^8.14.0",
     "firebase": "^10.8.1",
     "formik": "^2.4.5",
     "lodash": "^4.17.21",
