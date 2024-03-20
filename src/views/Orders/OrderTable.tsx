@@ -17,7 +17,11 @@ export default function OrderTable() {
   const [orderIds, setOrderIds] = useState<{ [k: string]: boolean }>({});
 
   const { orderData, isLoading } = useGetOrders();
-  const { productById } = useGetProducts();
+  const {
+    productData,
+    productById,
+    isLoading: isProductLoding,
+  } = useGetProducts();
   const columnHelper = createColumnHelper<Order>();
 
   const columns = useMemo(() => {
@@ -93,7 +97,7 @@ export default function OrderTable() {
       }),
     ];
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productById]);
+  }, [isProductLoding]);
 
   return (
     <>
