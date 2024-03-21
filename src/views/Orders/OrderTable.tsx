@@ -50,6 +50,7 @@ export default function OrderTable() {
           />
         ),
         header: () => <span></span>,
+        enableColumnFilter: false,
       }),
       columnHelper.accessor("customer_name", {
         id: "customerName",
@@ -65,6 +66,7 @@ export default function OrderTable() {
         id: "deliveryDate",
         cell: (info) => moment(info.getValue()).format("DD/MM/YYYY"),
         header: () => <span>Delivery Date</span>,
+        enableColumnFilter: false,
       }),
       columnHelper.accessor("items", {
         id: "items",
@@ -81,16 +83,19 @@ export default function OrderTable() {
           );
         },
         header: () => <span>Items/quantiy</span>,
+        enableColumnFilter: false,
       }),
       columnHelper.accessor("total_price", {
         id: "totalPrice",
         cell: (info) => info.getValue(),
         header: () => <span>Total Price (RM)</span>,
+        enableColumnFilter: false,
       }),
       columnHelper.accessor("status", {
         id: "status",
         cell: (info) => startCase(info.getValue()),
         header: () => <span>Status</span>,
+        enableColumnFilter: false,
       }),
       columnHelper.accessor("editId", {
         cell: (info) => {
@@ -101,6 +106,7 @@ export default function OrderTable() {
           );
         },
         header: () => "",
+        enableColumnFilter: false,
       }),
     ];
     // eslint-disable-next-line react-hooks/exhaustive-deps
