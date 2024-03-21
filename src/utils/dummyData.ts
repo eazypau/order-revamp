@@ -14,7 +14,7 @@ export const productList = [
 ];
 export const orderSummary = [
   {
-    name: "Overdue Orders",
+    name: "New Orders",
     value: 200,
   },
   {
