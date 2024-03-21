@@ -12,18 +12,18 @@ import { Order, useGetOrders } from "@/hooks/orders";
 import moment from "moment";
 import startCase from "lodash/startCase";
 import { useGetProducts } from "@/hooks/products";
+import { collection, doc, writeBatch } from "firebase/firestore";
+import { db } from "@/config/firebase";
+import { keys } from "lodash";
 
 export default function OrderTable() {
   const [orderIds, setOrderIds] = useState<{ [k: string]: boolean }>({});
 
   const { orderData, isLoading } = useGetOrders();
-  const {
-    productData,
-    productById,
-    isLoading: isProductLoding,
-  } = useGetProducts();
-  const columnHelper = createColumnHelper<Order>();
+  const { productById, isLoading: isProductLoding } = useGetProducts();
 
+  // table
+  const columnHelper = createColumnHelper<Order>();
   const columns = useMemo(() => {
     return [
       columnHelper.accessor("id", {
@@ -96,17 +96,40 @@ export default function OrderTable() {
       }),
     ];
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isProductLoding]);
+  }, [isProductLoding, orderIds]);
+
+  const batchUpdateStatus = async (status: string) => {
+    try {
+      const orderRef = collection(db, "orders");
+      const batch = writeBatch(db);
+      keys(orderIds).forEach((orderId) =>
+        batch.update(doc(orderRef, orderId), { status })
+      );
+      await batch.commit();
+      alert("successfully updated selected orders");
+      setOrderIds({});
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
       <DataTable columns={columns} data={!isLoading ? orderData : []} />
       {Object.values(orderIds).includes(true) && (
         <div className="fixed left-0 bottom-0 w-full mb-7 flex gap-3 justify-center items-center">
-          <button type="button" className="btn">
+          <button
+            type="button"
+            className="btn"
+            onClick={() => batchUpdateStatus("fulfilled")}
+          >
             Fulfill Order
           </button>
-          <button type="button" className="btn">
+          <button
+            type="button"
+            className="btn"
+            onClick={() => batchUpdateStatus("canceled")}
+          >
             Cancel Order
           </button>
         </div>
