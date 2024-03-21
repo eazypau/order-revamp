@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { db } from "@/config/firebase";
 import { useGetDocuments } from "@/config/firebaseFunctions";
 import {
+  Timestamp,
   addDoc,
   collection,
   doc,
@@ -27,6 +28,8 @@ export interface Order {
   }[];
   total_price?: number;
   status?: string;
+  created_at?: Timestamp;
+  updated_at?: Timestamp;
 
   // format
   editId?: string;
@@ -56,6 +59,7 @@ export function useGetOrders() {
     try {
       await updateDoc(doc(orderCollectionRef, id), {
         ...formData,
+        updated_at: serverTimestamp(),
       });
     } catch (error) {
       console.error(error);
