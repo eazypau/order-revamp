@@ -21,6 +21,14 @@ export default function OrderTable() {
 
   const { orderData, isLoading } = useGetOrders();
   const { productById, isLoading: isProductLoding } = useGetProducts();
+  const [filterStatus, setFilterStatus] = useState("unfulfill");
+
+  const orderFilter = useMemo(() => {
+    if (!isLoading && orderData) {
+      const filter = orderData.filter((item) => item.status === filterStatus);
+      return filter;
+    } else return [];
+  }, [orderData, isLoading, filterStatus]);
 
   // table
   const columnHelper = createColumnHelper<Order>();
@@ -115,7 +123,39 @@ export default function OrderTable() {
 
   return (
     <>
-      <DataTable columns={columns} data={!isLoading ? orderData : []} />
+      {orderData && (
+        <div className="flex items-center gap-3 mb-3">
+          <p>Status: </p>
+          <button
+            type="button"
+            className={
+              "btn btn-sm" + (filterStatus === "unfulfill" ? " btn-accent" : "")
+            }
+            onClick={() => setFilterStatus("unfulfill")}
+          >
+            Unfulfill
+          </button>
+          <button
+            type="button"
+            className={
+              "btn btn-sm" + (filterStatus === "fulfilled" ? " btn-accent" : "")
+            }
+            onClick={() => setFilterStatus("fulfilled")}
+          >
+            Fulfilled
+          </button>
+          <button
+            type="button"
+            className={
+              "btn btn-sm" + (filterStatus === "canceled" ? " btn-accent" : "")
+            }
+            onClick={() => setFilterStatus("canceled")}
+          >
+            Canceled
+          </button>
+        </div>
+      )}
+      <DataTable columns={columns} data={!isLoading ? orderFilter : []} />
       {Object.values(orderIds).includes(true) && (
         <div className="fixed left-0 bottom-0 w-full mb-7 flex gap-3 justify-center items-center">
           <button
