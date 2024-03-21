@@ -84,12 +84,11 @@ export default function OrderTable() {
         cell: (info) => startCase(info.getValue()),
         header: () => <span>Status</span>,
       }),
-      columnHelper.accessor("id", {
-        id: "customId",
+      columnHelper.accessor("editId", {
         cell: (info) => {
           return (
             <div className="flex justify-end">
-              <AddEditOrderDialog mode="edit" orderId={info.row.id} />
+              <AddEditOrderDialog mode="edit" orderId={info.getValue()} />
             </div>
           );
         },

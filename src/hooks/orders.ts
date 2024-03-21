@@ -27,6 +27,9 @@ export interface Order {
   }[];
   total_price?: number;
   status?: string;
+
+  // format
+  editId?: string;
 }
 
 export function useGetOrders() {
@@ -63,7 +66,13 @@ export function useGetOrders() {
 
   const orderMemo = useMemo(() => {
     if (orderQueryData && !isLoading) {
-      return orderBy(orderQueryData, ["created_at"]);
+      const formatData = orderQueryData.map((order) => {
+        return {
+          ...order,
+          editId: order.id,
+        };
+      });
+      return orderBy(formatData, ["created_at"]);
     } else return [];
   }, [orderQueryData, isLoading]);
 
