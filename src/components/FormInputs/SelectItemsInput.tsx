@@ -17,6 +17,7 @@ interface Item {
 interface SelectOption {
   id: string;
   name: string;
+  enable: boolean;
 }
 
 function SelectItemsInput({
@@ -57,7 +58,11 @@ function SelectItemsInput({
                       </option>
                       {options &&
                         options.map((option) => (
-                          <option key={option.id} value={option.id}>
+                          <option
+                            key={option.id}
+                            value={option.id}
+                            disabled={!option.enable}
+                          >
                             {option.name}
                           </option>
                         ))}
