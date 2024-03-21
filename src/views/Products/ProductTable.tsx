@@ -22,12 +22,14 @@ export default function ProductTable() {
       columnHelper.accessor("price", {
         cell: (info) => info.getValue().toFixed(2),
         header: () => "Price (RM)",
+        enableColumnFilter: false,
       }),
       columnHelper.accessor("enable", {
         cell: (info) => {
           return info.getValue() === true ? "Yes" : "No";
         },
         header: () => "Active",
+        enableColumnFilter: false,
       }),
       columnHelper.accessor("id", {
         cell: (info) => {
@@ -38,6 +40,7 @@ export default function ProductTable() {
           );
         },
         header: () => "",
+        enableColumnFilter: false,
       }),
     ];
   }, []);
