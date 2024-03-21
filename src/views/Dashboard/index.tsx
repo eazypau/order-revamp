@@ -154,7 +154,7 @@ function Dashboard() {
   }, [orderData, isOrderLoading]);
 
   return (
-    <div className="w-2/3 mx-auto mt-3">
+    <div className="md:px-6 lg:w-2/3 mx-auto mt-3">
       <h1 className="text-3xl font-bold">Dashboard</h1>
       <div className="bg-white py-2 sm:py-3 lg:py-4">
         <h2 className="mb-3 text-2xl font-semibold text-gray-800 lg:text-2xl">

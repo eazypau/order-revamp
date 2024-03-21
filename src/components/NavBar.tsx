@@ -3,7 +3,7 @@ import Link from "next/link";
 function NavBar() {
   return (
     <div className="navbar shadow-md">
-      <div className="w-3/4 mx-auto">
+      <div className="md:px-6 w-full lg:w-3/4 mx-auto">
         <div className="flex-1">
           <Link href="/" className="btn btn-ghost text-xl">
             OMS
