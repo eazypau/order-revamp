@@ -155,8 +155,8 @@ function Dashboard() {
 
   return (
     <div className="md:px-6 lg:w-2/3 mx-auto mt-3">
-      <h1 className="text-3xl font-bold">Dashboard</h1>
-      <div className="bg-white py-2 sm:py-3 lg:py-4">
+      <h1 className="text-3xl font-bold px-4 md:px-0">Dashboard</h1>
+      <div className="bg-white px-4 md:px-0 py-2 sm:py-3 lg:py-4">
         <h2 className="mb-3 text-2xl font-semibold text-gray-800 lg:text-2xl">
           Shortcuts
         </h2>
