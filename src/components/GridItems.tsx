@@ -8,9 +8,11 @@ interface GridItem {
 function GridItems({
   sectionName,
   items,
+  emptyText = "No data is provided.",
 }: {
   sectionName: string;
   items: GridItem[];
+  emptyText?: string;
 }) {
   return (
     <div className="bg-white py-2 sm:py-3 lg:py-4">
@@ -21,19 +23,21 @@ function GridItems({
           </h2>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-          {items.map((item) => (
-            <div
-              key={item.name}
-              className="flex flex-col items-center justify-center p-4 lg:p-8 shadow"
-            >
-              <div className="text-sm font-semibold sm:text-base">
-                {startCase(item.name)}
-              </div>
-              <div className="text-xl font-bold text-indigo-500 sm:text-2xl md:text-3xl xl:text-4xl">
-                {item.value}
-              </div>
-            </div>
-          ))}
+          {items.length > 0
+            ? items.map((item) => (
+                <div
+                  key={item.name}
+                  className="flex flex-col items-center justify-center p-4 lg:p-8 shadow"
+                >
+                  <div className="text-sm font-semibold sm:text-base">
+                    {startCase(item.name)}
+                  </div>
+                  <div className="text-xl font-bold text-indigo-500 sm:text-2xl md:text-3xl xl:text-4xl">
+                    {item.value}
+                  </div>
+                </div>
+              ))
+            : emptyText}
         </div>
       </div>
     </div>

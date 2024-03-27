@@ -165,8 +165,16 @@ function Dashboard() {
           <AddEditProductDialog mode="add" />
         </div>
       </div>
-      <GridItems sectionName="Overall Demand" items={overallDemand} />
-      <GridItems sectionName="Demand (Today)" items={todayDemand} />
+      <GridItems
+        sectionName="Overall Demand"
+        items={overallDemand}
+        emptyText="Currently there is no demand for any products."
+      />
+      <GridItems
+        sectionName="Demand (Today)"
+        items={todayDemand}
+        emptyText="*There is no demand for today."
+      />
       <GridItems sectionName="Order Summary (Today)" items={orderDemand} />
     </div>
   );
