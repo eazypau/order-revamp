@@ -3,7 +3,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 
 //components
 import DataTable from "@/components/DataTable";
-import AddEditOrderDialog from "./AddEditOrderDialog";
+import EditOrderDialog from "./EditOrderDialog";
 
 //hooks
 import { Order, useGetOrders } from "@/hooks/orders";
@@ -18,6 +18,8 @@ import { keys } from "lodash";
 
 export default function OrderTable() {
   const [orderIds, setOrderIds] = useState<{ [k: string]: boolean }>({});
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOrderToEdit, setSelectedOrderToEdit] = useState("");
 
   const { orderData, isLoading } = useGetOrders();
   const { productById, isLoading: isProductLoding } = useGetProducts();
@@ -99,10 +101,19 @@ export default function OrderTable() {
       }),
       columnHelper.accessor("editId", {
         cell: (info) => {
+          const openDialog = () => {
+            setSelectedOrderToEdit(info.getValue() as string);
+            setIsOpen(true);
+          };
+
           return (
-            <div className="flex justify-end">
-              <AddEditOrderDialog mode="edit" orderId={info.getValue()} />
-            </div>
+            <button
+              type="button"
+              className="btn btn-outline btn-sm text-sm"
+              onClick={openDialog}
+            >
+              Edit
+            </button>
           );
         },
         header: () => "",
@@ -161,6 +172,12 @@ export default function OrderTable() {
           </button>
         </div>
       )}
+      <EditOrderDialog
+        isOpen={isOpen}
+        setIsOpen={(value: boolean) => setIsOpen(value)}
+        orderId={selectedOrderToEdit}
+        clearSelected={() => setSelectedOrderToEdit("")}
+      />
       <DataTable columns={columns} data={!isLoading ? orderFilter : []} />
       {Object.values(orderIds).includes(true) && (
         <div className="fixed left-0 bottom-0 w-full mb-7 flex gap-3 justify-center items-center">

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 //components
 import DataTable from "@/components/DataTable";
@@ -7,8 +7,12 @@ import { createColumnHelper } from "@tanstack/react-table";
 
 //hooks
 import { Product, useGetProducts } from "@/hooks/products";
+import EditProductDialog from "./EditProductDialog";
 
 export default function ProductTable() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedProductToEdit, setSelectedProductToEdit] = useState("");
+
   const { productData, isLoading } = useGetProducts();
   const columnHelper = createColumnHelper<Product>();
 
@@ -33,10 +37,19 @@ export default function ProductTable() {
       }),
       columnHelper.accessor("id", {
         cell: (info) => {
+          const openDialog = () => {
+            setSelectedProductToEdit(info.getValue() as string);
+            setIsOpen(true);
+          };
+
           return (
-            <div className="flex justify-end">
-              <AddEditProductDialog mode="edit" productId={info.getValue()} />
-            </div>
+            <button
+              type="button"
+              className="btn btn-outline btn-sm text-sm"
+              onClick={openDialog}
+            >
+              Edit
+            </button>
           );
         },
         header: () => "",
@@ -45,5 +58,15 @@ export default function ProductTable() {
     ];
   }, []);
 
-  return <DataTable columns={columns} data={!isLoading ? productData : []} />;
+  return (
+    <>
+      <EditProductDialog
+        isOpen={isOpen}
+        setIsOpen={(value: boolean) => setIsOpen(value)}
+        productId={selectedProductToEdit}
+        clearSelected={() => setSelectedProductToEdit("")}
+      />
+      <DataTable columns={columns} data={!isLoading ? productData : []} />
+    </>
+  );
 }
