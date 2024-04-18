@@ -13,11 +13,13 @@ function DateTimeInput({
   name,
   placeholder,
   formProps,
+  requireMinDate = true,
 }: {
   label: string;
   name: string;
   placeholder?: string;
   formProps: FormProps;
+  requireMinDate?: boolean;
 }) {
   const { errors, touched, values, handleChange, handleBlur } = formProps;
   const minDate = new Date().toISOString().split("T")[0];
@@ -32,7 +34,7 @@ function DateTimeInput({
           name={name}
           placeholder={placeholder}
           className="input input-bordered w-full"
-          min={minDate}
+          min={requireMinDate ? minDate : ""}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values[name]}
